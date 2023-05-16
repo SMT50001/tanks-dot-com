@@ -1,10 +1,18 @@
+include 'macros.inc'
+; Using cdecl calling convention
 use16
-
 org 100h
 
-    mov ah, 9h
-    mov dx, hello
+    call get_mode
+    mov [mode_before_start], al
+    call set_vga_x_mode
+    mov ah, 8h
     int 21h
-    int 20h
+    mov ah, 0
+    mov al, [mode_before_start]
+    cdecl set_standart_mode, ax
+    ret
 
- hello db 13,10,"Hello, World!$"
+include 'vgax.inc'
+
+mode_before_start db ?
