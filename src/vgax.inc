@@ -14,21 +14,21 @@ set_vga_x_mode:
 ; No return value
 ; Sets one of the standart video modes
 set_standart_mode:
-    push ax
     push bx
     mov bx, sp
-    mov ax, [bx+6]
+    mov al, [bx+4]
+    mov ah, 0
     int 10h
     pop bx
-    pop ax
     ret
 
 ; No arguments
 ; AL: video mode number
 ; Gets current video mode
 get_mode:
-    push ax
+    push bx
     mov ah, 0x0f
     int 10h
-    pop ax
+    pop bx
+    mov ah, 0
     ret

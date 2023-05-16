@@ -1,5 +1,7 @@
 include 'macros.inc'
-; Using cdecl calling convention
+; Using modified cdecl calling convention
+; Callees clear registers and stack they use themselves
+
 use16
 org 100h
 
