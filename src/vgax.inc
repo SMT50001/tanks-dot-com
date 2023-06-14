@@ -2,6 +2,9 @@
 
 define MAP_MASK 0x02
 
+define PALETTE_INDEX 0x03c8
+define PALETTE_DATA 0x03c9
+
 define VSTART 0xa000
 define VPSIZE 0x4b00
 define W 320
@@ -76,22 +79,4 @@ set_plane_write_mode:
     mov ah, al
     mov al, MAP_MASK
     out dx, ax
-    ret
-
-; AX: color
-; No return value
-; Fills video memory with single color
-screen_fill:
-    mov cx, ax
-
-    fastcall set_plane_write_mode, 0x000f
-
-    mov ax, VSTART
-    mov es, ax
-    mov di, 0
-    mov ah, cl
-    mov al, cl
-    mov cx, VPSIZE/2
-    rep stosw
-
     ret
