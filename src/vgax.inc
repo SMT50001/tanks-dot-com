@@ -11,7 +11,6 @@ define H 240
 ; No return value
 ; Sets video mode to mode X
 set_vga_x_mode:
-
     fastcall set_standart_mode, 13h
 
     mov dx, 0x03c4
@@ -69,17 +68,23 @@ get_mode:
     mov ah, 0
     ret
 
-; AX - color
+; AX: plane write mode
+; No return value
+; Sets plane write mode: writing to all planes, one concrete plane, etc.
+set_plane_write_mode:
+    mov dx, 0x03c4
+    mov ah, al
+    mov al, MAP_MASK
+    out dx, ax
+    ret
+
+; AX: color
 ; No return value
 ; Fills video memory with single color
 screen_fill:
-
-    push bx
     mov cx, ax
 
-    mov dx, 0x03c4
-    mov ax, 0x0f00 + MAP_MASK
-    out dx, ax
+    fastcall set_plane_write_mode, 0x000f
 
     mov ax, VSTART
     mov es, ax
@@ -89,19 +94,4 @@ screen_fill:
     mov cx, VPSIZE/2
     rep stosw
 
-    pop bx
     ret
-
-
-crtparam:
-.vert_tot dw 0x00d06
-.overflow dw 0x03e07
-.cell_height dw 0x04109
-.vsync_start dw 0x0ea10
-.vsync_end dw 0x0ac11
-.display_vert dw 0x0df12
-no_dword dw 0x00014
-vblank_start dw 0x0e715
-vblank_end dw 0x00616
-byte_mode dw 0x0e317
-
