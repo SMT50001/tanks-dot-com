@@ -6,7 +6,7 @@ define VRETRACE 0x08
 ; AX: X position; DX: Y position CH: type; CL: size
 ; No return value
 ; Draws a sprite
-draw_sprite:
+draw_square:
     mov bx, dx
     shl bx, 6
     shl dx, 4
@@ -23,7 +23,7 @@ draw_sprite:
 
     mov ax, VSTART
     mov es, ax
-    mov [es:bx], ch
+    mov [es:bx], dh
     ret
 
 ; AX: color

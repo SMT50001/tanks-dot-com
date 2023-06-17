@@ -8,8 +8,9 @@ org 100h
     call get_mode
     mov [mode_before_start], ax
     call set_vga_x_mode
-    fastcall screen_fill, 60
-    fastcall draw_sprite, 200, 50, 0
+    fastcall set_palette, palette, [palette_colors]
+    fastcall screen_fill, 0
+    fastcall draw_square, 200, 50, 0x0100
 
     mov ah, 8h
     int 21h
@@ -18,5 +19,6 @@ org 100h
 
 include 'vgax.inc'
 include 'gfxutil.inc'
+include 'gfx.inc'
 
 mode_before_start dw 0

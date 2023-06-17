@@ -80,3 +80,28 @@ set_plane_write_mode:
     mov al, MAP_MASK
     out dx, ax
     ret
+
+; AX: address of a palette, DX: number of colors
+; No return value
+; Sets palette
+set_palette:
+    mov bx, ax
+    mov cx, dx
+    mov dx, PALETTE_INDEX
+    mov ax, 0
+    out dx, ax
+
+    mov dx, PALETTE_DATA
+    mov al, [bx]
+    xchg ch, cl
+    .set_colors:
+    out dx, al
+    inc ax
+    out dx, al
+    inc ax
+    out dx, al
+    inc ax
+    dec cx
+    loop .set_colors
+
+    ret
