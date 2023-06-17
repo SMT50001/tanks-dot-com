@@ -93,7 +93,6 @@ set_palette:
 
     mov dx, PALETTE_DATA
     mov al, [bx]
-    xchg ch, cl
     .set_colors:
     out dx, al
     inc ax

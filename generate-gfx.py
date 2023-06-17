@@ -25,10 +25,10 @@ def format_asm_array(name, iterable):
     return f'{name}_length dw {len(iterable)}' + '\n' + f'{name} db {format_asm_array_body(iterable)}'
 
 def format_palette(palette):
-    return f'palette_colors dw {len(palette)}' + '\n' + f'palette db {format_asm_array_body_hex([color for rgb in palette for color in rgb])}'
+    return f'palette_colors dw {format_asm_array_length_hex(len(palette))}' + '\n' + f'palette db {format_asm_array_body([color for rgb in palette for color in rgb])}'
 
-def format_asm_array_body_hex(iterable):
-    return ', '.join(['0x%04x'%x for x in iterable])
+def format_asm_array_length_hex(x):
+    return '0x%02x'%x + '00'
 
 def format_asm_array_body(iterable):
     return ', '.join([str(x) for x in iterable])
