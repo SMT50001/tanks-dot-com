@@ -23,7 +23,7 @@ draw_square:
 
     mov ax, VSTART
     mov es, ax
-    mov [es:bx], dh
+    mov [es:bx], dl
     ret
 
 ; AX: color

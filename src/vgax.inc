@@ -86,20 +86,22 @@ set_plane_write_mode:
 ; Sets palette
 set_palette:
     mov bx, ax
-    mov cx, dx
     mov dx, PALETTE_INDEX
-    mov ax, 0
-    out dx, ax
+    xor ax, ax
+    out dx, al
 
+    mov cx, 256
     mov dx, PALETTE_DATA
-    mov al, [bx]
     .set_colors:
+    mov al, [bx]
     out dx, al
-    inc ax
+    inc bx
+    mov al, [bx]
     out dx, al
-    inc ax
+    inc bx
+    mov al, [bx]
     out dx, al
-    inc ax
+    inc bx
     dec cx
     loop .set_colors
 

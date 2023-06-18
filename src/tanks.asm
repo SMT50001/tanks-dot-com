@@ -8,7 +8,7 @@ org 100h
     call get_mode
     mov [mode_before_start], ax
     call set_vga_x_mode
-    fastcall set_palette, palette, [palette_colors]
+    fastcall set_palette, palette
     fastcall screen_fill, 0
     fastcall draw_square, 200, 50, 0x0100
 

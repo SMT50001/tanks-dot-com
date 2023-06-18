@@ -16,7 +16,7 @@ listOfLists = [image for (name, image) in images]
 pixels = [pixel for image in listOfLists for pixel in image]
 colors = [(pixel[0], pixel[1], pixel[2]) for pixel in pixels]
 uniqueColors = set(colors)
-palette = [(255,0,255), (0,0,0)] + list(uniqueColors)
+palette = [(255,0,255), (0,0,0)] + list(uniqueColors) + [(0,0,0)]*(256 - 2 - len(uniqueColors))
 
 # checks that A in RGBA is either 0 or 255 in the image
 assert len([x for x in pixels if x[3] != 0 and x[3] != 255]) == 0
@@ -25,7 +25,7 @@ def format_asm_array(name, iterable):
     return f'{name}_length dw {len(iterable)}' + '\n' + f'{name} db {format_asm_array_body(iterable)}'
 
 def format_palette(palette):
-    return f'palette_colors dw {format_asm_array_length_hex(len(palette))}' + '\n' + f'palette db {format_asm_array_body([color for rgb in palette for color in rgb])}'
+    return f'palette db {format_asm_array_body([color for rgb in palette for color in rgb])}'
 
 def format_asm_array_length_hex(x):
     return '0x%02x'%x + '00'
