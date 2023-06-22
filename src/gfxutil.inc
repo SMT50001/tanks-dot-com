@@ -19,15 +19,16 @@ draw_sprite:
     add ax, bx
     add ax, dx
     mov di, ax
-    push ax
 
+    mov     ax, VSTART ; point ES to display memory
+    mov     es, ax
     cld
     xor dx, dx
 
     .draw_planes_loop:
 
     mov bx, sp
-    mov ax, [bx+2]
+    mov ax, [bx]
     add ax, dx
     and ax, 3
     mov cx, ax
@@ -38,14 +39,11 @@ draw_sprite:
     fastcall set_plane_write_mode, ax
     pop dx
 
-    mov     ax, VSTART ; point ES to display memory
-    mov     es, ax
-
     push di
 
     mov bx, sp
     xor cx, cx
-    mov ax, [bx+6]
+    mov ax, [bx+4]
     mov bx, ax
     mov cl, [bx]
     shr cx, 2
@@ -80,12 +78,11 @@ draw_sprite:
     pop cx
     pop di
 
-    ;pop ax
     cmp dx, 3
     inc dx
     jbe .draw_planes_loop
 
-    add sp, 6
+    add sp, 4
     ret
 
 ; AX: color
