@@ -5,12 +5,15 @@ include 'macros.inc'
 use16
 org 100h
 
+    push cs
+    pop ds
+
     call get_mode
     mov [mode_before_start], ax
     call set_vga_x_mode
     fastcall set_palette, palette
-    fastcall screen_fill, 0
-    fastcall draw_square, 200, 50, 0x0100
+    fastcall screen_fill, 1
+    fastcall draw_sprite, 152, 224, tank3_0
 
     mov ah, 8h
     int 21h
