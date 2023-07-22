@@ -25,7 +25,7 @@ def format_asm_array(name, iterable, image):
     return f'{name}:' + '\n' + f'{name}_size db {image.width}, {image.height}' + '\n' + f'{name}_pix db {format_asm_array_body(iterable)}'
 
 def format_palette(palette):
-    return f'palette db {format_asm_array_body([color for rgb in palette for color in rgb])}'
+    return f'palette db {format_asm_array_body([color * 63 // 255 for rgb in palette for color in rgb])}'
 
 def format_asm_array_body(iterable):
     return ', '.join([str(x) for x in iterable])
