@@ -28,3 +28,23 @@ macro fastcall proc, arg_ax, arg_dx, arg_cx, [arg]
         add sp, size@fastcall
     end if
 }
+
+define PAGE_ZERO 0xa000
+define PAGE_ONE 0xa4b0
+define PAGE_TWO 0xa960
+
+macro set_curr_vid_page pagenum
+{
+    if pagenum eq 0
+        mov     ax, PAGE_ZERO
+        mov     es, ax
+    end if
+    if pagenum eq 1
+        mov     ax, PAGE_ONE
+        mov     es, ax
+    end if
+    if pagenum eq 1
+        mov     ax, PAGE_TWO
+        mov     es, ax
+    end if
+}

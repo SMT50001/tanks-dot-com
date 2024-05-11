@@ -10,6 +10,19 @@ define VPSIZE 0x4b00
 define W 320
 define H 240
 
+test_vga_card:
+    mov ax, 0x1a00
+    int 10h
+    cmp al, 0x1a
+    xor ax, ax
+    jne .exit
+    inc ax
+    cmp bx, 8h
+    jne .exit
+    inc ax
+    .exit:
+    ret
+
 ; No arguments
 ; No return value
 ; Sets video mode to mode X

@@ -5,8 +5,8 @@ define VRETRACE 0x08
 
 ; AX: X position; DX: Y position CX: sprite struct
 ; No return value
-; Draws a sprite
-draw_sprite:
+; Copies an arbitrary image to video memory without transparent pixels
+copy_to_vmem_arbitrary_masked:
     push cx
     add cx, 2
     mov si, cx
@@ -20,8 +20,6 @@ draw_sprite:
     add ax, dx
     mov di, ax
 
-    mov     ax, VSTART ; point ES to display memory
-    mov     es, ax
     cld
     xor dx, dx
 
@@ -85,16 +83,22 @@ draw_sprite:
     add sp, 4
     ret
 
+
+; AX: X position; DX: Y position CX
+; No return value
+; Copies an image in video memory
+copy_in_vmem:
+    ret
+
+
 ; AX: color
 ; No return value
 ; Fills video memory with single color
-screen_fill:
+plane_fill:
     mov cx, ax
 
     fastcall set_plane_write_mode, 0x000f
 
-    mov ax, VSTART
-    mov es, ax
     mov di, 0
     mov ah, cl
     mov al, cl
