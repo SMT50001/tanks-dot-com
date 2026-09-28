@@ -102,7 +102,7 @@ plane_fill:
     mov di, 0
     mov ah, cl
     mov al, cl
-    mov cx, VPSIZE/2
+    mov cx, PAGE_SIZE/2
     rep stosw
 
     ret

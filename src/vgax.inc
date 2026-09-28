@@ -5,8 +5,10 @@ define MAP_MASK 0x02
 define PALETTE_INDEX 0x03c8
 define PALETTE_DATA 0x03c9
 
-define VSTART 0xa000
-define VPSIZE 0x4b00
+define PAGE_ZERO 0xa000
+define PAGE_ONE 0xa4b0
+define PAGE_TWO 0xa960
+define PAGE_SIZE 0x4b00
 define W 320
 define H 240
 

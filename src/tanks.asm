@@ -17,11 +17,18 @@ org 100h
     call disable_kbd_int
 
     call get_mode
-    mov [mode_before_start], ax
+    mov [cs:mode_before_start], ax
     call set_vga_x_mode
     fastcall set_palette, palette
 
     set_curr_vid_page 0
+
+    ; temporary hack to set segments before new drawing code is ready
+    push ds
+    pop es
+    push cs
+    pop ds
+
     fastcall plane_fill, 1
 
     ; Do logic
@@ -35,12 +42,12 @@ org 100h
     .dont_move_sprite:
     ; Wait for retrace and draw
     call wait_retrace
-    fastcall redraw_sprite, 152, [sprite_pos], tank1_0
+    fastcall redraw_sprite, 152, [cs:sprite_pos], tank1_0
     jmp .main_loop
 
     .stop_loop:
     call enable_kbd_int
-    fastcall set_standart_mode, [mode_before_start]
+    fastcall set_standart_mode, [cs:mode_before_start]
     jmp .exit
 
     .no_bios_support:
@@ -56,7 +63,8 @@ org 100h
     int 21h
 
     .exit:
-    ret
+    mov ax, 4C00h
+    int 21h
 
 include 'vgax.inc'
 include 'gfxutil.inc'
