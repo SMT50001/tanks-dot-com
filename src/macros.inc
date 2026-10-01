@@ -33,14 +33,14 @@ macro set_curr_vid_page pagenum
 {
     if pagenum eq 0
         mov     ax, 0xa000
-        mov     ds, ax
+        mov     es, ax
     end if
     if pagenum eq 1
         mov     ax, 0xa4b0
-        mov     ds, ax
+        mov     es, ax
     end if
     if pagenum eq 1
         mov     ax, 0xa960
-        mov     ds, ax
+        mov     es, ax
     end if
 }

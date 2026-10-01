@@ -23,12 +23,6 @@ org 100h
 
     set_curr_vid_page 0
 
-    ; temporary hack to set segments before new drawing code is ready
-    push ds
-    pop es
-    push cs
-    pop ds
-
     fastcall plane_fill, 1
 
     ; Do logic
